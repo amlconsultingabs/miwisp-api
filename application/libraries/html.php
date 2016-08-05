@@ -13,7 +13,7 @@ class Html {
 <title>miWISP</title>
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="css/normalize.css">
+<link rel="stylesheet" href="./assets/css/normalize.css">
 <style>
 /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
 body {
@@ -68,6 +68,17 @@ top: 40%;
 background-color: #8bc34a;
 }
 .login.ok button .spinner {
+border-radius: 0;
+border-top-color: transparent;
+border-right-color: transparent;
+height: 20px;
+animation: none;
+transform: rotateZ(-45deg);
+}
+.login.error button {
+background-color: #ff7373;
+}
+.login.error button .spinner {
 border-radius: 0;
 border-top-color: transparent;
 border-right-color: transparent;
@@ -174,19 +185,18 @@ color: #fff;
 text-decoration: none;
 }
 </style>
-<script src="js/prefixfree.min.js"></script>
+<script src="./assets/js/prefixfree.min.js"></script>
 </head>
 <body>
 <div class="wrapper">
-<form class="login">
-<img src="./assets/img/logo.png" />
+<form id="form" class="login">
+<div style="text-align:center;"><img src="./assets/img/logo.png" /></div>
 <p class="title"></p>
-<p>Acceda con las credenciales del propietario de la licencia para activar la plataforma</p>
-<input type="email" placeholder="Email" autofocus/>
+<p style="text-align:center;">Acceda con sus credenciales de propietario de la licencia para activar la plataforma</p>
+<input name="email" required type="email" placeholder="Email" autofocus/>
 <i class="fa fa-user"></i>
-<input type="password" placeholder="Contraseña" />
+<input name="pass" required type="password" placeholder="Contraseña" />
 <i class="fa fa-key"></i>
-<a href="#">¿Olvido su contraseña?</a>
 <button>
 <i class="spinner"></i>
 <span class="state">Activar</span>
@@ -199,7 +209,7 @@ text-decoration: none;
 </p>
 </div>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="js/index.js"></script>
+<script src="./assets/js/index.js"></script>
 </body>
 </html>
 ';

@@ -2,7 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Api extends CI_Controller {
-
 	public function index()
 	{
 		$data = array();
@@ -13,6 +12,10 @@ class Api extends CI_Controller {
 			if($check == '' || $check == NULL){ $data['content'] = $this->html->GetLogin(); }else{ $data['content'] = $this->html->openSystem($check); };
 		}
 		$this->load->view('view', $data);
+	}	
+	public function write($data)
+	{
+		write_file($this->config->item('path_file'), '');
+		write_file($this->config->item('path_file'), $data);
 	}
-	
 }
