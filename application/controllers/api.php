@@ -5,20 +5,14 @@ class Api extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->helper('file');
-		$check = read_file('./application/data/data.txt');
-		echo $check;
-		die;
 		$data = array();
-		$data['form_login'] = $this->html->GetLogin();
-		$data['domain'] = 'http://localhost/system';
+		$check = read_file($this->config->item('path_file'));
+		if ($check === FALSE) {		
+		    $data['content'] = 'N/A';
+		}else{						
+			if($check == '' || $check == NULL){ $data['content'] = $this->html->GetLogin(); }else{ $data['content'] = $this->html->openSystem($check); };
+		}
 		$this->load->view('view', $data);
 	}
 	
-	public function checkLogin()
-	{
-		$data = array();
-		$data['form_login'] = $this->html->GetLogin();
-		$this->load->view('view', $data);
-	}
 }

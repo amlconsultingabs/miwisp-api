@@ -10,7 +10,7 @@ class Html {
 <html >
 <head>
 <meta charset="UTF-8">
-<title>Animated login form</title>
+<title>miWISP</title>
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="css/normalize.css">
@@ -19,8 +19,10 @@ class Html {
 body {
 font-family: "Open Sans", sans-serif;
 height: 100vh;
-background: url("http://i.imgur.com/HgflTDf.jpg") 50% fixed;
-background-size: cover;
+background: #24C6DC; /* fallback for old browsers */
+background: -webkit-linear-gradient(to left, #24C6DC , #514A9D); /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #24C6DC , #514A9D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        
 }
 
 @keyframes spinner {
@@ -42,7 +44,6 @@ justify-content: center;
 width: 100%;
 min-height: 100%;
 padding: 20px;
-background: rgba(4, 40, 68, 0.85);
 }
 
 .login {
@@ -178,18 +179,23 @@ text-decoration: none;
 <body>
 <div class="wrapper">
 <form class="login">
-<p class="title">Log in</p>
-<input type="text" placeholder="Username" autofocus/>
+<img src="./assets/img/logo.png" />
+<p class="title"></p>
+<p>Acceda con las credenciales del propietario de la licencia para activar la plataforma</p>
+<input type="email" placeholder="Email" autofocus/>
 <i class="fa fa-user"></i>
-<input type="password" placeholder="Password" />
+<input type="password" placeholder="Contraseña" />
 <i class="fa fa-key"></i>
-<a href="#">Forgot your password?</a>
+<a href="#">¿Olvido su contraseña?</a>
 <button>
 <i class="spinner"></i>
-<span class="state">Log in</span>
+<span class="state">Activar</span>
 </button>
 </form>
-<footer><a target="blank" href="http://boudra.me/">boudra.me</a></footer>
+<footer>
+<p>¿Necesita ayuda? soporte@miwisp.net</p>
+<a href="http://miwisp.net/">miwisp.net</a>
+</footer>
 </p>
 </div>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -200,8 +206,30 @@ text-decoration: none;
 			return $login;
         }
 		
-		public function openSystem($domain){
-			$open = '<iframe src="'.$domain.'" style="position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;"> Tu navegador no soporta esta tecnologia </iframe>';
+		public function openSystem($token){
+			$open = '
+			<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+			<script type="text/javascript">
+				$(document).ready(function() {					
+					var request   = $.ajax({
+				  	url:          "http://localhost/system/check/api/'.$token.'",
+				        cache:        false,
+				        type:         "GET"
+				    });
+				    request.done(function(output){
+				      if(output.domain == "error"){
+				    	  alert("fallo");
+				      } else {
+						  $("#iframe").attr("src", output.domain);
+				      }
+				    });
+				    request.fail(function(jqXHR, textStatus){
+				    	alert("fallo");
+				    });
+					return false;
+			});
+			</script>
+			<iframe id="iframe" src="#" style="position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;"> Tu navegador no soporta esta tecnologia </iframe>';
 			return $open;
 		}
 }
